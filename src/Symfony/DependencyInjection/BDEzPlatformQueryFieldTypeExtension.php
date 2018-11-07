@@ -23,6 +23,8 @@ class BDEzPlatformQueryFieldTypeExtension extends Extension implements PrependEx
         $loader->load('field_value_converters.yml');
         $loader->load('graphql.yml');
         $loader->load('services.yml');
+
+        $this->setContentViewConfig($container);
     }
 
     public function prepend(ContainerBuilder $container)
@@ -38,5 +40,21 @@ class BDEzPlatformQueryFieldTypeExtension extends Extension implements PrependEx
         $config = Yaml::parse(file_get_contents($configFile));
         $container->prependExtensionConfig('ezpublish', $config);
         $container->addResource(new FileResource($configFile));
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function setContentViewConfig(ContainerBuilder $container): void
+    {
+        $contentViewDefaults = $container->getParameter('ezsettings.default.content_view_defaults');
+        $contentViewDefaults['query_field'] = [
+            'default' => [
+                'controller' => 'BD\EzPlatformQueryFieldTypeBundle\Controller\QueryFieldController:renderQueryFieldAction',
+                'template' => "BDEzPlatformQueryFieldTypeBundle::query_field_view.html.twig",
+                'match' => [],
+            ]
+        ];
+        $container->setParameter('ezsettings.default.content_view_defaults', $contentViewDefaults);
     }
 }
