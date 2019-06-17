@@ -3,6 +3,7 @@ namespace BD\EzPlatformQueryFieldType\Controller;
 
 use BD\EzPlatformQueryFieldType\GraphQL\QueryFieldResolver;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use EzSystems\EzPlatformGraphQL\GraphQL\Value\Field as GraphQLField;
 
 class QueryFieldController
 {
@@ -19,7 +20,7 @@ class QueryFieldController
     public function renderQueryFieldAction(ContentView $view, $queryFieldDefinitionIdentifier)
     {
         $queryResults = $this->queryFieldResolver->resolveQueryField(
-            $view->getContent()->getField($queryFieldDefinitionIdentifier),
+            GraphQLField::fromField($view->getContent()->getField($queryFieldDefinitionIdentifier)),
             $view->getContent()
         );
 

@@ -1,6 +1,7 @@
 <?php
 namespace BD\EzPlatformQueryFieldType\Symfony\DependencyInjection;
 
+use BD\EzPlatformQueryFieldType\Controller\QueryFieldController;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -50,7 +51,7 @@ class BDEzPlatformQueryFieldTypeExtension extends Extension implements PrependEx
         $contentViewDefaults = $container->getParameter('ezsettings.default.content_view_defaults');
         $contentViewDefaults['query_field'] = [
             'default' => [
-                'controller' => 'BD\EzPlatformQueryFieldTypeBundle\Controller\QueryFieldController:renderQueryFieldAction',
+                'controller' => QueryFieldController::class . ':renderQueryFieldAction',
                 'template' => "BDEzPlatformQueryFieldTypeBundle::query_field_view.html.twig",
                 'match' => [],
             ]

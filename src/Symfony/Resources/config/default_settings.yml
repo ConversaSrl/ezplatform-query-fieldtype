@@ -1,7 +1,0 @@
-# @todo inject cleanly. Extension ?
-parameters:
-    ezsettings.default.content_view_defaults:
-        query_field:
-            default:
-                controller: 'BD\EzPlatformQueryFieldType\Controller\QueryFieldController:renderQueryFieldAction'
-                match: []
